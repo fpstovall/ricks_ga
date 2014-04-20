@@ -1,0 +1,49 @@
+#!/bin/bash
+#***********************************************
+# This file is part of the Rick's Generic GA Solver project (https://launchpad.net/ricks-ga).
+#
+#    Rick's Generic GA Solver is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Rick's Generic GA Solver is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Rick's Generic GA Solver.  If not, see <http://www.gnu.org/licenses/>.
+#
+#***********************************************/
+
+# Get the args.
+basename="$1_"
+shift
+count=$1
+shift
+
+# Initialize counter
+i=0
+
+# Do the runs
+
+while test $i -lt $count
+do 
+	# Justify
+	if test $i -lt 10 
+		then num="000$i"
+	elif test $i -lt 100 
+		then num="00$i"
+	elif test $i -lt 1000 
+		then num="0$i"
+	else num=$i
+	fi
+	
+	# Announce and run.
+	echo "`date`: start run # $i"
+	./salesman_tourney --no-file-headers --mute outfile=out/$basename$num.tsv $@
+
+	# Increment counter.
+	let i++
+done;
